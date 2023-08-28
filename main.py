@@ -213,19 +213,20 @@ def search(taxonid='', startTime='', endTime='', province='', city='', district=
     # data_frame = pd.DataFrame(df)
     # data_frame.to_excel("info.xlsx", index=False)
 
+def get_back_date(n):
+    t = int(time.time()) - n*60*60*24
+    # ta_now = time.localtime(now)
+    ta = time.localtime(t)
+    return time.strftime("%Y-%m-%d", ta)
+
 if __name__ == '__main__':
 
     with open("./jQuertAjax.js", "r", encoding="utf-8") as f:
         node_path = "./node_modules"
         ctx = execjs.compile(f.read(), cwd=node_path)
 
-    now = int(time.time())
-    n = 0
-    last = now - n*60*60*24
-    ta_now = time.localtime(now)
-    ta_last = time.localtime(last)
-
-    endTime = time.strftime("%Y-%m-%d", ta_now)
-    startTime = time.strftime("%Y-%m-%d", ta_last)
+    endTime = get_back_date(0)
+    startTime = get_back_date(0)
     province = '北京市'
     search(startTime=startTime, endTime=endTime, province=province)
+

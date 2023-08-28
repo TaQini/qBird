@@ -9,3 +9,4 @@
 4. 运行 main 文件
 
 ## ebird 
+ - [ebird API](https://www.birds.cornell.edu/home/ebird-api-terms-of-use/)
