@@ -15,9 +15,13 @@ checklists2 = y.search(startTime=y.get_back_date(0), endTime=y.get_back_date(0),
 info2 = y.spp_info(checklists2)
 # print(info2)
 
-merge = {}
-merge.update(info)
-merge.update(info2)
+# 整合观测数据
+merge = info2
+for i in info:
+    if i not in merge:
+        merge[i] = info[i]
+    else:
+        merge[i] += info[i]
 
 print(merge)
 

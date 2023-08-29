@@ -241,5 +241,5 @@ class birdreport:
                 howManyStr = taxon["taxon_count"]
                 if comName not in info:
                     info[comName] = []
-                info[comName].append((obsDt, howManyStr, lat, lng, item['point_name']))
+                info[comName].append((obsDt, howManyStr, lat, lng, item['point_name'],1))
         return info

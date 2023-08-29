@@ -236,5 +236,5 @@ class ebird:
                 howManyStr = taxon["howManyStr"]
                 if comName not in info:
                     info[comName] = []
-                info[comName].append((obsDt, howManyStr, loc['lat'], loc['lng'], loc['locName']))
+                info[comName].append((obsDt, howManyStr, loc['lat'], loc['lng'], loc['locName'],0))
         return info
