@@ -23,6 +23,9 @@ for i in info:
     else:
         merge[i] += info[i]
 
+f = open('./test.db','w+')
+f.write(str(merge))
+f.close()
 print(merge)
 
 # sp = 'lewduc1'
