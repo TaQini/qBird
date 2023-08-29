@@ -184,14 +184,15 @@ class birdreport:
                 detail = self.get_report_detail(_id)
                 # print('detail',detail)
                 taxons = self.get_taxon(_id)
+                # print(json.dumps(taxons,sort_keys=True, indent=4, separators=(',', ': ')))
                 # print('taxons',taxons)
                 for taxon in taxons:
-
                     # df["位置"].append(detail["point_name"])
                     print(detail["serial_id"],
                         detail["point_name"],
                         detail["location"],
                         taxon["taxon_name"],
+                        taxon["latinname"],
                         taxon["taxon_count"])
                     # df["坐标"].append(detail["location"])
                     # df["地址"].append(detail["address"])
