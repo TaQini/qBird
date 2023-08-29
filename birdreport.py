@@ -172,11 +172,11 @@ class birdreport:
         res = self.get_all_report_url_list(data)
 
         id_list = []
-
+        checklists = []
         for item in res:
             id_list.append(item["id"])
 
-        # print(id_list)
+        print(id_list)
 
         for _id in id_list:
             try:
@@ -186,6 +186,9 @@ class birdreport:
                 taxons = self.get_taxon(_id)
                 # print(json.dumps(taxons,sort_keys=True, indent=4, separators=(',', ': ')))
                 # print('taxons',taxons)
+                detail["obs"] = taxons
+                checklists.append(detail)
+                # print(json.dumps(detail,sort_keys=True, indent=4, separators=(',', ': ')))
                 for taxon in taxons:
                     # df["位置"].append(detail["point_name"])
                     print(detail["serial_id"],
@@ -212,6 +215,31 @@ class birdreport:
             except Exception as e:
                 print(f"{_id} error")
                 print(e)
-
+        return checklists
         # data_frame = pd.DataFrame(df)
         # data_frame.to_excel("info.xlsx", index=False)
+    def show(self, checklists):
+        for item in checklists:
+            lng, lat = item['location'].split(',')        
+            print(lat, lng, item['point_name'])
+            obs = item['obs']
+            for taxon in obs:
+                sciName = taxon['latinname']
+                comName = taxon['taxon_name']
+                howManyStr = taxon["taxon_count"]
+                print(sciName, comName, howManyStr)
+
+    def spp_info(self, checklists):
+        info = {}
+        for item in checklists:
+            lng, lat = item['location'].split(',')        
+            obs = item['obs']
+            obsDt = item['timebegin']
+            for taxon in obs:
+                sciName = taxon['latinname']
+                comName = taxon['taxon_name']
+                howManyStr = taxon["taxon_count"]
+                if comName not in info:
+                    info[comName] = []
+                info[comName].append((obsDt, howManyStr, lat, lng, item['point_name']))
+        return info

@@ -25619,5 +25619,151 @@
         ],
         "speciesCode": "rocpig1",
         "taxonOrder": 1871.0
+    },
+    {
+        "bandingCodes": [],
+        "category": "issf",
+        "comName": "\u7070\u559c\u9e4a\uff08\u4e1c\u4e9a\uff09",
+        "comNameCodes": [
+            "AAWM",
+            "AWMA"
+        ],
+        "familyCode": "corvid1",
+        "familyComName": "Crows, Jays, and Magpies",
+        "familySciName": "Corvidae",
+        "order": "Passeriformes",
+        "reportAs": "azwmag2",
+        "sciName": "Cyanopica cyanus [cyanus Group]",
+        "sciNameCodes": [
+            "CYCY"
+        ],
+        "speciesCode": "azwmag1",
+        "taxonOrder": 20888.0
+    },
+    {
+        "bandingCodes": [],
+        "category": "spuh",
+        "comName": "\u672a\u8bc6\u522b\u7684Motacilla\u5c5e\u9e61\u9e30",
+        "comNameCodes": [],
+        "familyCode": "motaci1",
+        "familyComName": "Wagtails and Pipits",
+        "familySciName": "Motacillidae",
+        "order": "Passeriformes",
+        "sciName": "Motacilla sp.",
+        "sciNameCodes": [],
+        "speciesCode": "wagtai1",
+        "taxonOrder": 31085.0
+    },
+    {
+        "bandingCodes": [
+            "GSWO"
+        ],
+        "category": "species",
+        "comName": "\u5927\u6591\u5544\u6728\u9e1f",
+        "comNameCodes": [],
+        "familyCode": "picida1",
+        "familyComName": "Woodpeckers",
+        "familySciName": "Picidae",
+        "order": "Piciformes",
+        "sciName": "Dendrocopos major",
+        "sciNameCodes": [
+            "DEMA"
+        ],
+        "speciesCode": "grswoo",
+        "taxonOrder": 11033.0
+    },
+    {
+        "bandingCodes": [],
+        "category": "species",
+        "comName": "\u7070\u559c\u9e4a",
+        "comNameCodes": [
+            "AAWM",
+            "AWMA"
+        ],
+        "familyCode": "corvid1",
+        "familyComName": "Crows, Jays, and Magpies",
+        "familySciName": "Corvidae",
+        "order": "Passeriformes",
+        "sciName": "Cyanopica cyanus",
+        "sciNameCodes": [
+            "CYCY"
+        ],
+        "speciesCode": "azwmag2",
+        "taxonOrder": 20887.0
+    },
+    {
+        "bandingCodes": [],
+        "category": "species",
+        "comName": "\u559c\u9e4a",
+        "comNameCodes": [
+            "EUMA",
+            "ORMA"
+        ],
+        "familyCode": "corvid1",
+        "familyComName": "Crows, Jays, and Magpies",
+        "familySciName": "Corvidae",
+        "order": "Passeriformes",
+        "sciName": "Pica serica",
+        "sciNameCodes": [
+            "PISE"
+        ],
+        "speciesCode": "orimag1",
+        "taxonOrder": 20962.0
+    },
+    {
+        "bandingCodes": [
+            "TBWA"
+        ],
+        "category": "species",
+        "comName": "\u539a\u5634\u82c7\u83ba",
+        "comNameCodes": [],
+        "familyCode": "acroce2",
+        "familyComName": "Reed Warblers and Allies",
+        "familySciName": "Acrocephalidae",
+        "order": "Passeriformes",
+        "sciName": "Arundinax aedon",
+        "sciNameCodes": [
+            "ARAE"
+        ],
+        "speciesCode": "thbwar1",
+        "taxonOrder": 23104.0
+    },
+    {
+        "bandingCodes": [],
+        "category": "species",
+        "comName": "\u4e2d\u534e\u77ed\u7fc5\u83ba",
+        "comNameCodes": [
+            "CGWA",
+            "CBWA",
+            "CHGW"
+        ],
+        "familyCode": "locust5",
+        "familyComName": "Grassbirds and Allies",
+        "familySciName": "Locustellidae",
+        "order": "Passeriformes",
+        "sciName": "Locustella tacsanowskia",
+        "sciNameCodes": [
+            "LOTA"
+        ],
+        "speciesCode": "chbwar1",
+        "taxonOrder": 23289.0
+    },
+    {
+        "bandingCodes": [],
+        "category": "species",
+        "comName": "\u767d\u5934\u9e4e",
+        "comNameCodes": [
+            "LVBU"
+        ],
+        "familyCode": "pycnon4",
+        "familyComName": "Bulbuls",
+        "familySciName": "Pycnonotidae",
+        "order": "Passeriformes",
+        "sciName": "Pycnonotus sinensis",
+        "sciNameCodes": [
+            "PYSI"
+        ],
+        "speciesCode": "livbul1",
+        "taxonOrder": 23994.0
     }
 ]

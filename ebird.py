@@ -16,7 +16,11 @@ class ebird:
     with open("./ebird-CN.json", "r", encoding="utf-8") as f:
         spp_db = json.loads(f.read())
     for _spp in spp_db:
-        spp_dict[_spp['speciesCode']] = (_spp['sciName'], _spp['comName'])
+        # 消除 例如 灰喜鹊、灰喜鹊（东亚）这样的重复
+        if 'reportAs' in _spp:
+            spp_dict[_spp['speciesCode']] = spp_dict[_spp['reportAs']]
+        else:
+            spp_dict[_spp['speciesCode']] = (_spp['sciName'], _spp['comName'])
         spp_trans[_spp['sciName']] = (_spp['comName'], _spp['speciesCode'])
 
     def update_spp(self, speciesCode):
@@ -216,3 +220,21 @@ class ebird:
                 comName = self.get_comName_from_sciName(sciName)
                 howManyStr = taxon["howManyStr"]
                 print(speciesCode, sciName, comName, howManyStr)
+    def spp_info(self, checklists):
+        info = {}
+        for item in checklists:
+            loc = item['loc']
+            obs = item['obs']
+            obsDt = item['obsDt'] 
+            # .split(' ')[0]
+            for taxon in obs:
+                speciesCode = taxon['speciesCode']
+                # print(json.dumps(taxon,sort_keys=True, indent=4, separators=(',', ': ')))
+                # input('wait...')
+                sciName = self.get_sciName_from_speciesCode(speciesCode)
+                comName = self.get_comName_from_sciName(sciName)
+                howManyStr = taxon["howManyStr"]
+                if comName not in info:
+                    info[comName] = []
+                info[comName].append((obsDt, howManyStr, loc['lat'], loc['lng'], loc['locName']))
+        return info
