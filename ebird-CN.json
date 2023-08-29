@@ -25765,5 +25765,39 @@
         ],
         "speciesCode": "livbul1",
         "taxonOrder": 23994.0
+    },
+    {
+        "bandingCodes": [],
+        "category": "spuh",
+        "comName": "\u672a\u8bc6\u522b\u7684Ardea\u5c5e\u5927\u578b\u9e6d\u7c7b",
+        "comNameCodes": [],
+        "familyCode": "ardeid1",
+        "familyComName": "Herons, Egrets, and Bitterns",
+        "familySciName": "Ardeidae",
+        "order": "Pelecaniformes",
+        "sciName": "Ardea sp.",
+        "sciNameCodes": [],
+        "speciesCode": "ardea1",
+        "taxonOrder": 7335.0
+    },
+    {
+        "bandingCodes": [],
+        "category": "issf",
+        "comName": "\u5bb6\u71d5\uff08\u4e1c\u4e9a\uff0c\u767d\u8179\uff09",
+        "comNameCodes": [
+            "BASW",
+            "BARS"
+        ],
+        "familyCode": "hirund2",
+        "familyComName": "Swallows",
+        "familySciName": "Hirundinidae",
+        "order": "Passeriformes",
+        "reportAs": "barswa",
+        "sciName": "Hirundo rustica gutturalis/mandschurica",
+        "sciNameCodes": [
+            "HIRU"
+        ],
+        "speciesCode": "barswa4",
+        "taxonOrder": 23615.0
     }
 ]

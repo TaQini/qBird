@@ -1,7 +1,8 @@
 import requests
 import json
 import time
-
+import threading
+import multiprocessing
 # url = "https://api.ebird.org/v2/data/obs/CN-11/recent"
 # url = "https://api.ebird.org/v2/data/obs/geo/recent?lat=39.85933&lng=116.68708&sort=species&dist=50&back=3"
 # url = "https://api.ebird.org/v2/product/spplist/CN-11"
@@ -161,40 +162,68 @@ class ebird:
 
         print('正在获取日期范围内的checklist id...')
 
-        for _date in date_list:
-            res = self.get_historic_list(date=_date)
-            # print(json.dumps(res,sort_keys=True, indent=4, separators=(',', ': ')))
+        lock1 = threading.Lock()
+        def loop1():
+            while len(date_list):
+                lock1.acquire()
+                _date =  date_list.pop()               
+                lock1.release()
+                res = self.get_historic_list(date=_date)
+                # print(json.dumps(res,sort_keys=True, indent=4, separators=(',', ': ')))
+                print('thread %s >>> %s' % (threading.current_thread().name, _date))
+                for item in res:
+                    try:
+                        id_detail[item["subId"]] = item
+                        # {
+                            # 'lat':item["loc"]["lat"],
+                            # 'lng':item["loc"]["lng"],
+                            # 'locName':item["loc"]["locName"], 
+                            # 'userDisplayName':item["userDisplayName"]
+                        # }
+                        id_list.append(item["subId"])
+                    except Exception as e:
+                        print(f"{item} error")
+                        print(e)
 
-            for item in res:
-                try:
-                    id_detail[item["subId"]] = item
-                    # {
-                        # 'lat':item["loc"]["lat"],
-                        # 'lng':item["loc"]["lng"],
-                        # 'locName':item["loc"]["locName"], 
-                        # 'userDisplayName':item["userDisplayName"]
-                    # }
-                    id_list.append(item["subId"])
-                except Exception as e:
-                    print(f"{item} error")
-                    print(e)
+        t1 = []
+        for i in range(multiprocessing.cpu_count()):
+            t1.append(threading.Thread(target=loop1))
+            t1[i].start()
+        for i in range(multiprocessing.cpu_count()):
+            t1[i].join()
 
         print(id_list)
         checklists = []
         print(f'共计{len(id_list)}份报告')
-        for _id in id_list:
-            detail = self.get_report_detail(subId=_id)
-            # detail["lat"] = id_detail[_id]["lat"]
-            # detail["lng"] = id_detail[_id]["lng"]
-            # detail["locName"] = id_detail[_id]["locName"]
-            # detail["userDisplayName"] = id_detail[_id]["userDisplayName"]
-            for _ in id_detail[_id]:
-                if _ not in detail:
-                    detail[_] = id_detail[_id][_]
-            # print(json.dumps(id_detail[_id],sort_keys=True, indent=4, separators=(',', ': ')))
-            # print(json.dumps(detail,sort_keys=True, indent=4, separators=(',', ': ')))
-            checklists.append(detail)
 
+        lock2 = threading.Lock()
+        def loop2():
+            while len(id_list):
+                lock2.acquire()
+                _id =  id_list.pop()               
+                lock2.release()
+            # for _id in id_list:
+                detail = self.get_report_detail(subId=_id)
+                # detail["lat"] = id_detail[_id]["lat"]
+                # detail["lng"] = id_detail[_id]["lng"]
+                # detail["locName"] = id_detail[_id]["locName"]
+                # detail["userDisplayName"] = id_detail[_id]["userDisplayName"]
+                print('thread %s >>> %s' % (threading.current_thread().name, _id))
+                for _ in id_detail[_id]:
+                    if _ not in detail:
+                        detail[_] = id_detail[_id][_]
+                # print(json.dumps(id_detail[_id],sort_keys=True, indent=4, separators=(',', ': ')))
+                # print(json.dumps(detail,sort_keys=True, indent=4, separators=(',', ': ')))
+                checklists.append(detail)
+
+        t2 = []
+        for i in range(multiprocessing.cpu_count()):
+            t2.append(threading.Thread(target=loop2))
+            t2[i].start()
+        for i in range(multiprocessing.cpu_count()):
+            t2[i].join()
+
+        print(f'已获取{len(checklists)}份报告')
         return checklists
             # taxons = detail['obs']
             # for taxon in taxons:

@@ -3,7 +3,7 @@ import birdreport
 import json
 import config
 x = ebird.ebird(config.token)
-checklists = x.search(startTime=x.get_back_date(0),endTime=x.get_back_date(0))
+checklists = x.search(startTime=x.get_back_date(3),endTime=x.get_back_date(0))
 # x.show(checklists)
 info = x.spp_info(checklists)
 # print(info)

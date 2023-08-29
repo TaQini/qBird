@@ -9,6 +9,9 @@ import urllib
 import time
 import sys
 
+import threading
+import multiprocessing
+
 class birdreport:
     with open("./jQuertAjax.js", "r", encoding="utf-8") as f:
         node_path = "./node_modules"
@@ -144,7 +147,7 @@ class birdreport:
             if len(report_list) == 0:
                 break
             page += 1
-        print(f"共获取到{len(_data_list)}份报告")
+        print(f"正在获取{len(_data_list)}份报告")
         # with open("aid.txt", "w+", encoding="utf-8") as _f:
         #     for _item in _data_list:
         #         _f.write(json.dumps(_item))
@@ -170,18 +173,29 @@ class birdreport:
         }
 
         res = self.get_all_report_url_list(data)
-
+        # print(res)
         id_list = []
+        id_detail = {}
+
         checklists = []
         for item in res:
+            id_detail[item["id"]] = item
             id_list.append(item["id"])
 
         print(id_list)
+        # print(id_detail)
 
-        for _id in id_list:
-            try:
-                # print(_id)
-                detail = self.get_report_detail(_id)
+        lock = threading.Lock()
+        # get obs in checklist
+        def loop():
+            while len(id_list):
+                lock.acquire()
+                _id =  id_list.pop()
+                lock.release()
+
+                # detail = self.get_report_detail(_id)
+                detail = id_detail[_id]
+                print('thread %s >>> %s' % (threading.current_thread().name, _id))
                 # print('detail',detail)
                 taxons = self.get_taxon(_id)
                 # print(json.dumps(taxons,sort_keys=True, indent=4, separators=(',', ': ')))
@@ -189,32 +203,16 @@ class birdreport:
                 detail["obs"] = taxons
                 checklists.append(detail)
                 # print(json.dumps(detail,sort_keys=True, indent=4, separators=(',', ': ')))
-                for taxon in taxons:
-                    # df["位置"].append(detail["point_name"])
-                    print(detail["serial_id"],
-                        detail["point_name"],
-                        detail["location"],
-                        taxon["taxon_name"],
-                        taxon["latinname"],
-                        taxon["taxon_count"])
-                    # df["坐标"].append(detail["location"])
-                    # df["地址"].append(detail["address"])
-                    # df["名称"].append(taxon["taxon_name"])
-                    # df["数量"].append(taxon["taxon_count"])
-                    # {'outside_type': 0, 
-                    # 'englishname': 'Mallard', 
-                    # 'taxon_count': 1, 
-                    # 'activity_id': 489541, 
-                    # 'taxonordername': '雁形目', 
-                    # 'taxon_id': 90, 
-                    # 'taxon_name': '绿头鸭', 
-                    # 'taxonfamilyname': '鸭科', 
-                    # 'latinname': 'Anas platyrhynchos', 
-                    # 'record_image_num': 0}
-                # break
-            except Exception as e:
-                print(f"{_id} error")
-                print(e)
+
+        t = []
+        for i in range(multiprocessing.cpu_count()):
+            t.append(threading.Thread(target=loop))
+            t[i].start()
+        for i in range(multiprocessing.cpu_count()):
+            t[i].join()
+
+        print(f'已获取{len(checklists)}份报告')
+
         return checklists
         # data_frame = pd.DataFrame(df)
         # data_frame.to_excel("info.xlsx", index=False)
@@ -234,7 +232,7 @@ class birdreport:
         for item in checklists:
             lng, lat = item['location'].split(',')        
             obs = item['obs']
-            obsDt = item['timebegin']
+            obsDt = item['start_time']
             for taxon in obs:
                 sciName = taxon['latinname']
                 comName = taxon['taxon_name']
